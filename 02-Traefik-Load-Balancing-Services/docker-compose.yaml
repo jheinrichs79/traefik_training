@@ -1,0 +1,14 @@
+---
+services:
+  traefik:
+    image: traefik:latest
+    command: --api.insecure=true --providers.docker --log.level=INFO
+    ports:
+      - 80:80
+      - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  whoami:
+    image: containous/whoami:latest
+    labels:
+      - traefik.http.routers.whoami.rule=Host(`whoami.pi400.home.local`)
